@@ -23,7 +23,7 @@ AlwaysBreakTemplateDeclarations: 'Yes'
 BinPackArguments: 'true'
 BinPackParameters: 'true'
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Stroustrup
+BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: 'true'
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma

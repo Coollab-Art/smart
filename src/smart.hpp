@@ -1,7 +1,7 @@
 #pragma once
 
-namespace sma {
-
+namespace sma
+{
 template<typename T>
 T clamp_bot(T x, T min_value)
 {
