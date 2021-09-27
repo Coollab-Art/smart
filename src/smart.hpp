@@ -1,6 +1,6 @@
 #pragma once
 
-namespace sma
+namespace smart
 {
 template<typename T>
 T clamp_bot(T x, T min_value)
@@ -14,4 +14,4 @@ T clamp_top(T x, T max_value)
     return std::min(a, max_value);
 }
 
-} // namespace sma
+} // namespace smart
