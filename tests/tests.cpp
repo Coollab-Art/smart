@@ -1,8 +1,12 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
+#include <complex>
 #include <smart/smart.hpp>
 
-TEST_CASE_TEMPLATE("clamp_bot", T, int, float, double)
+#define EQUALITY_COMPARABLE_TYPES int, float, double, std::complex<float>
+#define TOTALLY_ORDERED_TYPES     int, float, double
+
+TEST_CASE_TEMPLATE("clamp_bot", T, TOTALLY_ORDERED_TYPES)
 {
     constexpr auto clamp_bot_5 = [](auto x)
     {
@@ -15,7 +19,7 @@ TEST_CASE_TEMPLATE("clamp_bot", T, int, float, double)
     CHECK(clamp_bot_5(T{3}) == T{5});
 }
 
-TEST_CASE_TEMPLATE("clamp_top", T, int, float, double)
+TEST_CASE_TEMPLATE("clamp_top", T, TOTALLY_ORDERED_TYPES)
 {
     constexpr auto clamp_top_5 = [](auto x)
     {
