@@ -3,8 +3,8 @@
 #include <complex>
 #include <smart/smart.hpp>
 
-#define EQUALITY_COMPARABLE_TYPES int, float, double, std::complex<float>
-#define TOTALLY_ORDERED_TYPES     int, float, double
+#define EQUALITY_COMPARABLE_TYPES int32_t, uint32_t, float, double, std::complex<float>
+#define TOTALLY_ORDERED_TYPES     int32_t, uint32_t, float, double
 
 TEST_CASE_TEMPLATE("clamp_bot", T, TOTALLY_ORDERED_TYPES)
 {
