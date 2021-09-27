@@ -17,3 +17,19 @@ TEST_CASE("clamp_bot")
         CHECK(smart::clamp_bot(x, x) == x);
     }
 }
+
+TEST_CASE("clamp_top")
+{
+    {
+        constexpr auto x = 3;
+        CHECK(smart::clamp_top(x, 10) == x);
+        CHECK(smart::clamp_top(x, 2) == 2);
+        CHECK(smart::clamp_top(x, x) == x);
+    }
+    {
+        constexpr auto x = 3.f;
+        CHECK(smart::clamp_top(x, 10.f) == x);
+        CHECK(smart::clamp_top(x, 2.f) == 2.f);
+        CHECK(smart::clamp_top(x, x) == x);
+    }
+}
