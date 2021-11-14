@@ -1,16 +1,15 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.8)
+project(smart-tests)
 
-project(Smart-Tests C CXX)
-set(EXECUTABLE_OUTPUT_PATH 
-    ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}
-)
-add_executable(${PROJECT_NAME}
-    tests.cpp
-)
-set_property(TARGET ${PROJECT_NAME}
-    PROPERTY CXX_STANDARD 20
-)
-include_directories(
-    ../src
-    ../doctest
-)
+add_executable(${PROJECT_NAME} tests.cpp)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /WX /W4)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wconversion -Wsign-conversion)
+endif()
+
+add_subdirectory(.. ${CMAKE_CURRENT_SOURCE_DIR}/build/smart)
+target_link_libraries(${PROJECT_NAME} PRIVATE smart::smart)
+add_subdirectory(doctest)
+target_link_libraries(${PROJECT_NAME} PRIVATE doctest::doctest)
