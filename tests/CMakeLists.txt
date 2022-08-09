@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(smart-tests)
 
 add_executable(${PROJECT_NAME} tests.cpp)
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /WX /W4)
 else()
