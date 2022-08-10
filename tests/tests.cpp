@@ -1,5 +1,14 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
 #include <doctest/doctest.h>
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
+
 #include <complex>
 #include <smart/smart.hpp>
 
@@ -9,8 +18,7 @@
 
 TEST_CASE_TEMPLATE("keep_above", T, TOTALLY_ORDERED_TYPES)
 {
-    constexpr auto keep_above_5 = [](auto x)
-    {
+    constexpr auto keep_above_5 = [](auto x) {
         return smart::keep_above(T{5}, x);
     };
     CHECK(keep_above_5(T{7}) == T{7});
@@ -22,8 +30,7 @@ TEST_CASE_TEMPLATE("keep_above", T, TOTALLY_ORDERED_TYPES)
 
 TEST_CASE_TEMPLATE("keep_below", T, TOTALLY_ORDERED_TYPES)
 {
-    constexpr auto keep_below_5 = [](auto x)
-    {
+    constexpr auto keep_below_5 = [](auto x) {
         return smart::keep_below(T{5}, x);
     };
     CHECK(keep_below_5(T{3}) == T{3});
