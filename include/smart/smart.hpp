@@ -2,9 +2,9 @@
 
 #include <cmath>
 #include <numeric>
+#include <valarray>
 
-namespace smart
-{
+namespace smart {
 template<typename T>
 T keep_above(T x, T min_value)
 {
@@ -46,6 +46,51 @@ template<typename T>
 T sign(T val)
 {
     return val < T{0} ? T{-1} : T{1};
+}
+
+struct Fraction {
+    int numerator{};
+    int denominator{};
+
+    friend auto operator==(Fraction a, Fraction b) -> bool
+    {
+        return a.numerator == b.numerator && a.denominator == b.denominator;
+    }
+};
+
+inline std::ostream& operator<<(std::ostream& os, smart::Fraction fraction)
+{
+    os << fraction.numerator << "/" << fraction.denominator;
+    return os;
+}
+
+template<typename Float>
+auto as_fraction(Float x, int max_number = 99, Float precision = 1e-4) -> Fraction
+{
+    const int sign     = x > 0 ? 1 : -1;
+    x                  = std::abs(x);
+    Float decimal_part = x - std::floor(x);
+
+    std::valarray<int> fraction{static_cast<int>(std::floor(x)), 1};
+    std::valarray<int> previous_fraction{1, 0};
+    while (fraction[0] < max_number
+           && fraction[1] < max_number
+           && decimal_part > precision)
+    {
+        const Float new_x      = 1 / decimal_part;
+        const int   whole_part = static_cast<int>(std::floor(new_x));
+
+        const auto temporary = fraction;
+        fraction             = whole_part * fraction + previous_fraction;
+        previous_fraction    = temporary;
+
+        decimal_part = new_x - whole_part;
+    }
+
+    if (decimal_part > precision)     // We broke out of the loop because the numerator or denominator exceeded the allowed number
+        fraction = previous_fraction; // so we have to go back to the previous fraction
+
+    return {sign * fraction[0], fraction[1]};
 }
 
 } // namespace smart

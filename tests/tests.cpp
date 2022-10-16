@@ -55,3 +55,10 @@ TEST_CASE_TEMPLATE("sign_or_0", T, SIGNED_TYPES)
     CHECK(smart::sign_or_0(T{+3}) == T{+1});
     CHECK(smart::sign_or_0(T{-2}) == T{-1});
 }
+
+TEST_CASE("as_fraction")
+{
+    CHECK(smart::as_fraction(0.5f) == smart::Fraction{1, 2});
+    CHECK(smart::as_fraction(1.f) == smart::Fraction{1, 1});
+    CHECK(smart::as_fraction(1.778, 1e-3) == smart::Fraction{16, 9});
+}
