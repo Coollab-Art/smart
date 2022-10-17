@@ -65,7 +65,13 @@ inline std::ostream& operator<<(std::ostream& os, smart::Fraction fraction)
 }
 
 template<typename Float>
-auto as_fraction(Float x, int max_number = 99, Float precision = 1e-4) -> Fraction
+struct as_fraction_Params {
+    int   max_iterations = 10;
+    Float precision      = static_cast<Float>(1e-6);
+};
+
+template<typename Float>
+auto as_fraction(Float x, as_fraction_Params<Float> params = {}) -> Fraction
 {
     const int sign     = x > 0 ? 1 : -1;
     x                  = std::abs(x);
@@ -73,10 +79,10 @@ auto as_fraction(Float x, int max_number = 99, Float precision = 1e-4) -> Fracti
 
     std::valarray<int> fraction{static_cast<int>(std::floor(x)), 1};
     std::valarray<int> previous_fraction{1, 0};
-    while (fraction[0] < max_number
-           && fraction[1] < max_number
-           && decimal_part > precision)
+    while (params.max_iterations > 0
+           && decimal_part > params.precision)
     {
+        --params.max_iterations;
         const Float new_x      = 1 / decimal_part;
         const int   whole_part = static_cast<int>(std::floor(new_x));
 
@@ -86,9 +92,6 @@ auto as_fraction(Float x, int max_number = 99, Float precision = 1e-4) -> Fracti
 
         decimal_part = new_x - whole_part;
     }
-
-    if (decimal_part > precision)     // We broke out of the loop because the numerator or denominator exceeded the allowed number
-        fraction = previous_fraction; // so we have to go back to the previous fraction
 
     return {sign * fraction[0], fraction[1]};
 }

@@ -60,5 +60,5 @@ TEST_CASE("as_fraction")
 {
     CHECK(smart::as_fraction(0.5f) == smart::Fraction{1, 2});
     CHECK(smart::as_fraction(1.f) == smart::Fraction{1, 1});
-    CHECK(smart::as_fraction(1.778, 1e-3) == smart::Fraction{16, 9});
+    CHECK(smart::as_fraction(1.77777778) == smart::Fraction{16, 9});
 }
