@@ -83,14 +83,15 @@ auto as_fraction(Float x, as_fraction_Params<Float> params = {}) -> Fraction
            && decimal_part > params.precision)
     {
         --params.max_iterations;
-        const Float new_x      = 1 / decimal_part;
-        const int   whole_part = static_cast<int>(std::floor(new_x));
+        const Float new_x               = 1 / decimal_part;
+        const Float whole_part_as_float = std::floor(new_x);
+        const int   whole_part          = static_cast<int>(whole_part_as_float);
 
         const auto temporary = fraction;
         fraction             = whole_part * fraction + previous_fraction;
         previous_fraction    = temporary;
 
-        decimal_part = new_x - whole_part;
+        decimal_part = new_x - whole_part_as_float;
     }
 
     return {sign * fraction[0], fraction[1]};
