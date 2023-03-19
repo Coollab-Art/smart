@@ -12,9 +12,7 @@ else()
 endif()
 
 # Maybe enable warnings as errors
-set(WARNINGS_AS_ERRORS_FOR_SMART_TESTS OFF CACHE BOOL "ON iff you want to treat warnings as errors") # Might be overriden in the CMake cache
-
-if(WARNINGS_AS_ERRORS_FOR_SMART_TESTS)
+if(WARNINGS_AS_ERRORS_FOR_SMART)
     if(MSVC)
         target_compile_options(${PROJECT_NAME} PRIVATE /WX)
     else()
