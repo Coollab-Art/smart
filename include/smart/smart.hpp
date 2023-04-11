@@ -1,10 +1,11 @@
 #pragma once
-
 #include <cmath>
+#include <cstdint>
 #include <numeric>
 #include <valarray>
 
 namespace smart {
+
 template<typename T>
 T keep_above(T x, T min_value)
 {
@@ -49,8 +50,8 @@ T sign(T val)
 }
 
 struct Fraction {
-    int numerator{};
-    int denominator{};
+    int64_t numerator{};
+    int64_t denominator{};
 
     friend auto operator==(Fraction a, Fraction b) -> bool
     {
@@ -73,19 +74,19 @@ struct as_fraction_Params {
 template<typename Float>
 auto as_fraction(Float x, as_fraction_Params<Float> params = {}) -> Fraction
 {
-    const int sign     = x > 0 ? 1 : -1;
+    const int64_t sign = x > 0 ? 1 : -1;
     x                  = std::abs(x);
     Float decimal_part = x - std::floor(x);
 
-    std::valarray<int> fraction{static_cast<int>(std::floor(x)), 1};
-    std::valarray<int> previous_fraction{1, 0};
+    std::valarray<int64_t> fraction{static_cast<int64_t>(std::floor(x)), 1};
+    std::valarray<int64_t> previous_fraction{1, 0};
     while (params.max_iterations > 0
            && decimal_part > params.precision)
     {
         --params.max_iterations;
         const Float new_x               = 1 / decimal_part;
         const Float whole_part_as_float = std::floor(new_x);
-        const int   whole_part          = static_cast<int>(whole_part_as_float);
+        const int64_t whole_part          = static_cast<int64_t>(whole_part_as_float);
 
         const auto temporary = fraction;
         fraction             = whole_part * fraction + previous_fraction;
