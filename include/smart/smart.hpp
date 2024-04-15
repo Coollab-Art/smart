@@ -49,6 +49,15 @@ T sign(T val)
     return val < T{0} ? T{-1} : T{1};
 }
 
+template<std::integral T>
+auto mod(T x, T y)
+{
+    auto res = x % y;
+    if (res < 0)
+        res += y;
+    return res;
+}
+
 struct Fraction {
     int64_t numerator{};
     int64_t denominator{};
@@ -84,8 +93,8 @@ auto as_fraction(Float x, as_fraction_Params<Float> params = {}) -> Fraction
            && decimal_part > params.precision)
     {
         --params.max_iterations;
-        const Float new_x               = 1 / decimal_part;
-        const Float whole_part_as_float = std::floor(new_x);
+        const Float   new_x               = 1 / decimal_part;
+        const Float   whole_part_as_float = std::floor(new_x);
         const int64_t whole_part          = static_cast<int64_t>(whole_part_as_float);
 
         const auto temporary = fraction;

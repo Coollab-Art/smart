@@ -15,6 +15,7 @@
 #define EQUALITY_COMPARABLE_TYPES int32_t, uint32_t, float, double, std::complex<float>, std::complex<double>
 #define TOTALLY_ORDERED_TYPES     int32_t, uint32_t, float, double
 #define SIGNED_TYPES              int32_t, float, double
+#define SIGNED_INTEGER_TYPES      int16_t, int32_t, int64_t
 
 TEST_CASE_TEMPLATE("keep_above", T, TOTALLY_ORDERED_TYPES)
 {
@@ -54,6 +55,23 @@ TEST_CASE_TEMPLATE("sign_or_0", T, SIGNED_TYPES)
     CHECK(smart::sign_or_0(-T{0}) == T{0});
     CHECK(smart::sign_or_0(T{+3}) == T{+1});
     CHECK(smart::sign_or_0(T{-2}) == T{-1});
+}
+
+TEST_CASE_TEMPLATE("mod", T, SIGNED_INTEGER_TYPES)
+{
+    CHECK(smart::mod(3, 10) == 3);
+    CHECK(smart::mod(12, 10) == 2);
+    CHECK(smart::mod(168796512, 10) == 2);
+    CHECK(smart::mod(-1, 10) == 9);
+    CHECK(smart::mod(-16, 10) == 4);
+    CHECK(smart::mod(-46, 10) == 4);
+    CHECK(smart::mod(-41265346, 10) == 4);
+
+    CHECK(smart::mod(10, 10) == 0);
+    CHECK(smart::mod(0, 10) == 0);
+    CHECK(smart::mod(-10, 10) == 0);
+    CHECK(smart::mod(-9, 10) == 1);
+    CHECK(smart::mod(-11, 10) == 9);
 }
 
 TEST_CASE("as_fraction")
