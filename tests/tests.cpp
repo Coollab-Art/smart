@@ -16,6 +16,8 @@
 #define TOTALLY_ORDERED_TYPES     int32_t, uint32_t, float, double
 #define SIGNED_TYPES              int32_t, float, double
 #define SIGNED_INTEGER_TYPES      int16_t, int32_t, int64_t
+#define SIGNED_FLOAT_TYPES        float, double
+#define SIGNED_TYPES              int16_t, int32_t, int64_t, float, double
 
 TEST_CASE_TEMPLATE("keep_above", T, TOTALLY_ORDERED_TYPES)
 {
@@ -72,6 +74,28 @@ TEST_CASE_TEMPLATE("mod", T, SIGNED_INTEGER_TYPES)
     CHECK(smart::mod(-10, 10) == 0);
     CHECK(smart::mod(-9, 10) == 1);
     CHECK(smart::mod(-11, 10) == 9);
+}
+
+TEST_CASE_TEMPLATE("mod", T, SIGNED_FLOAT_TYPES)
+{
+    CHECK(doctest::Approx{smart::mod(3., 10.)} == 3.);
+    CHECK(doctest::Approx{smart::mod(12., 10.)} == 2.);
+    CHECK(doctest::Approx{smart::mod(168796512., 10.)} == 2.);
+    CHECK(doctest::Approx{smart::mod(-1., 10.)} == 9.);
+    CHECK(doctest::Approx{smart::mod(-16., 10.)} == 4.);
+    CHECK(doctest::Approx{smart::mod(-46., 10.)} == 4.);
+    CHECK(doctest::Approx{smart::mod(-41265346., 10.)} == 4.);
+
+    CHECK(doctest::Approx{smart::mod(10., 10.)} == 0.);
+    CHECK(doctest::Approx{smart::mod(0., 10.)} == 0.);
+    CHECK(doctest::Approx{smart::mod(-10., 10.)} == 0.);
+    CHECK(doctest::Approx{smart::mod(-9., 10.)} == 1.);
+    CHECK(doctest::Approx{smart::mod(-11., 10.)} == 9.);
+
+    CHECK(doctest::Approx{smart::mod(0.2, 1.)} == 0.2);
+    CHECK(doctest::Approx{smart::mod(8.2, 1.)} == 0.2);
+    CHECK(doctest::Approx{smart::mod(-0.3, 1.)} == 0.7);
+    CHECK(doctest::Approx{smart::mod(-2.3, 1.)} == 0.7);
 }
 
 TEST_CASE("as_fraction")

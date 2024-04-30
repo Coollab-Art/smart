@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <concepts>
 #include <cstdint>
 #include <numeric>
 #include <valarray>
@@ -53,6 +54,15 @@ template<std::integral T>
 auto mod(T x, T y)
 {
     auto res = x % y;
+    if (res < 0)
+        res += y;
+    return res;
+}
+
+template<std::floating_point T>
+auto mod(T x, T y)
+{
+    auto res = fmod(x, y);
     if (res < 0)
         res += y;
     return res;
