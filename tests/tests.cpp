@@ -14,10 +14,9 @@
 
 #define EQUALITY_COMPARABLE_TYPES int32_t, uint32_t, float, double, std::complex<float>, std::complex<double>
 #define TOTALLY_ORDERED_TYPES     int32_t, uint32_t, float, double
-#define SIGNED_TYPES              int32_t, float, double
+#define SIGNED_TYPES              int16_t, int32_t, int64_t, float, double
 #define SIGNED_INTEGER_TYPES      int16_t, int32_t, int64_t
 #define SIGNED_FLOAT_TYPES        float, double
-#define SIGNED_TYPES              int16_t, int32_t, int64_t, float, double
 
 TEST_CASE_TEMPLATE("keep_above", T, TOTALLY_ORDERED_TYPES)
 {
