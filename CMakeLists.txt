@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.20)
 
 set(WARNINGS_AS_ERRORS_FOR_SMART OFF CACHE BOOL "ON iff you want to treat warnings as errors")
 
@@ -10,4 +10,5 @@ if(WARNINGS_AS_ERRORS_FOR_SMART)
 else()
     target_include_directories(smart SYSTEM INTERFACE include)
 endif()
+
 target_compile_features(smart INTERFACE cxx_std_20)
