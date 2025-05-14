@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.25)
 project(smart-tests)
 
 add_executable(${PROJECT_NAME} tests.cpp)
@@ -27,6 +27,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE smart::smart)
 include(FetchContent)
 FetchContent_Declare(
     doctest
+    SYSTEM
     GIT_REPOSITORY https://github.com/doctest/doctest
     GIT_TAG b7c21ec5ceeadb4951b00396fc1e4642dd347e5f
 )
