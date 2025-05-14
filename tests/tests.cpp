@@ -1,14 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
 #include <doctest/doctest.h>
-#if defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
-
 #include <complex>
 #include <smart/smart.hpp>
 
